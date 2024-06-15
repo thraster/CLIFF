@@ -385,7 +385,7 @@ import smplx
 from common import constants
 
 smpl_model = smplx.create(constants.SMPL_MODEL_DIR, "smpl")
-pred_dir = r'E:\WorkSpace\inbed_pose_repos\CLIFF\slp_sample\cliff_defaultweight_100epoch.npz'
+pred_dir = r'E:\WorkSpace\inbed_pose_repos\CLIFF\slp_sample\cliff_hr48.npz'
 data_gt = np.load(r'E:\WorkSpace\inbed_pose_repos\CLIFF\slp_sample\p102.npz')
 data_pred = np.load(pred_dir)
 print(data_gt.keys(), data_pred.keys())

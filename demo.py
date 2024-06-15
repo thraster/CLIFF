@@ -134,7 +134,9 @@ def main(args):
         # It should be fine if you use the plain Equation (5) in the paper.
         bbox_info[:, :2] = bbox_info[:, :2] / focal_length.unsqueeze(-1) * 2.8  # [-1, 1]
         bbox_info[:, 2] = (bbox_info[:, 2] - 0.24 * focal_length) / (0.06 * focal_length)  # [-1, 1]
-
+        
+        # print(f"bbox_info = {bbox_info}, {bbox_info.shape}")
+        
         with torch.no_grad():
             pred_rotmat, pred_betas, pred_cam_crop = cliff_model(norm_img, bbox_info)
 
@@ -286,6 +288,6 @@ if __name__ == '__main__':
 # python demo.py --input_type folder --input_path E:\WorkSpace\inbed_pose_repos\CLIFF\inbed_samples --save_results --show_bbox --show_sideView --viz
 # python demo.py --input_type folder --ckpt data\ckpt\best.pt --input_path E:\WorkSpace\inbed_pose_repos\CLIFF\inbed_samples --save_results --show_bbox --show_sideView --viz
 
-# python demo.py --input_type folder --input_path E:\WorkSpace\inbed_pose_repos\CLIFF\slp_sample --save_results --show_bbox --show_sideView --viz --ckpt data\ckpt\best.pt
+# python demo.py --input_type folder --input_path E:\WorkSpace\inbed_pose_repos\CLIFF\slp_sample --save_results --show_bbox --show_sideView --viz --ckpt data\ckpt\best_400_hr48.pt
 
-# python demo.py --input_type folder --input_path E:\WorkSpace\inbed_pose_repos\CLIFF\slp_sample --save_results --show_bbox --show_sideView --viz --ckpt data\ckpt\best_res50.pt --backbone res50
+# python demo.py --input_type folder --input_path E:\WorkSpace\inbed_pose_repos\CLIFF\slp_sample --save_results --show_bbox --show_sideView --viz --ckpt data\ckpt\best_400_res50.pt --backbone res50

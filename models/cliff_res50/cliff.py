@@ -17,6 +17,9 @@ import torch
 import torch.nn as nn
 import numpy as np
 import math
+import sys
+
+sys.path.append(r'E:\WorkSpace\inbed_pose_repos\CLIFF')
 
 from common.imutils import rot6d_to_rotmat
 from models.backbones.resnet import ResNet
@@ -38,6 +41,7 @@ class CLIFF(nn.Module):
         fc2_feat_num = 1024
         final_feat_num = fc2_feat_num
         reg_in_feat_num = img_feat_num + nbbox + npose + nshape + ncam
+
         self.fc1 = nn.Linear(reg_in_feat_num, fc1_feat_num)
         self.drop1 = nn.Dropout()
         self.fc2 = nn.Linear(fc1_feat_num, fc2_feat_num)
@@ -95,3 +99,24 @@ class CLIFF(nn.Module):
         pred_rotmat = rot6d_to_rotmat(pred_pose).view(batch_size, 24, 3, 3)
 
         return pred_rotmat, pred_shape, pred_cam
+
+if __name__ == '__main__':
+    from common import constants
+    from torchinfo import summary
+
+    model = CLIFF(constants.SMPL_MEAN_PARAMS,img_feat_num=2048)
+    print(model)
+    summary(model, input_data=[torch.randn(1, 3, 256, 192), torch.randn(1, 3)])
+
+    # # from torchviz import make_dot
+    # from torch.utils.tensorboard import SummaryWriter
+    # # 定义输入
+    # x = torch.randn(1, 3, 256, 192)
+    # bbox = torch.randn(1, 3)
+
+    # # 创建 TensorBoard 日志记录器
+    # writer = SummaryWriter(log_dir="runs/cliff_model")
+
+    # # 记录模型结构
+    # writer.add_graph(model, (x, bbox))
+    # writer.close()
